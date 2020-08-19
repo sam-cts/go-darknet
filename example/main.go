@@ -14,11 +14,11 @@ import (
 	"github.com/disintegration/imaging"
 )
 
-var configFile = flag.String("configFile", "",
+var configFile = flag.String("configFile", "./yolov4.cfg",
 	"Path to network layer configuration file. Example: cfg/yolov3.cfg")
-var weightsFile = flag.String("weightsFile", "",
+var weightsFile = flag.String("weightsFile", "./yolov4.weights",
 	"Path to weights file. Example: yolov3.weights")
-var imageFile = flag.String("imageFile", "",
+var imageFile = flag.String("imageFile", "./sample.jpg",
 	"Path to image file, for detection. Example: image.jpg")
 
 func printError(err error) {
