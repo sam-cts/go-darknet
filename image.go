@@ -5,6 +5,8 @@ package darknet
 import "C"
 import (
 	"image"
+	"log"
+	"time"
 	"unsafe"
 
 	"golang.org/x/image/draw"
@@ -79,6 +81,23 @@ func Float32ToDarknetImage(flatten []float32, width, height int) (*DarknetImage,
 		Height: height,
 		image:  C.make_image(C.int(width), C.int(height), 3),
 	}
+	now := time.Now()
 	C.fill_image_f32(&imgDarknet.image, C.int(width), C.int(height), 3, (*C.float)(unsafe.Pointer(&flatten[0])))
+	log.Println("fill image time: ", time.Now().Sub(now).Seconds())
 	return imgDarknet, nil
+}
+
+// FillDarknetImage fill DarknetImage with flatten float32
+func (img *DarknetImage) FillDarknetImage(flatten []float32, width, height int) {
+	C.fill_image_f32(&img.image, C.int(width), C.int(height), 3, (*C.float)(unsafe.Pointer(&flatten[0])))
+}
+
+// NewDarknetImage create new darknet image
+func NewDarknetImage(width, height int) *DarknetImage {
+	imgDarknet := &DarknetImage{
+		Width:  width,
+		Height: height,
+		image:  C.make_image(C.int(width), C.int(height), 3),
+	}
+	return imgDarknet
 }
